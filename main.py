@@ -2,11 +2,19 @@ import logging
 from sqlalchemy import create_engine
 import psycopg2
 from procesamientoDatos import culturaMain, registros, cines_filtrados
-from decouple import config
+from datetime import datetime
+from datetime import date
 
-logging.basicConfig(level=logging.INFO , format='%(asctime)s: %(levelname)s - %(message)s')
 
-logging.info('Conectando a base de datos')
+logging.basicConfig( level=logging.DEBUG, filename='loggin.log')
+
+logger = logging.getLogger('loggin')
+logger.setLevel(logging.DEBUG)
+fh = logging.FileHandler('debug.log')
+fh.setLevel(logging.DEBUG)
+logger.addHandler(fh)
+
+logger.info('mensaje info: se ha iniciado creacion de sql')
 
 DATABASE_NAME = config('DATABASE_NAME',default=False)
 DATABASE_USERNAME = config ('DATABASE_USERNAME',default=False)
@@ -20,11 +28,11 @@ engine=create_engine('postgresql+psycopg2://'+user+':'+password+'@localhost:5432
 conn= engine.connect()
 
 logging.info('Creando tablas en base de datos')
-with open('./src/script/tablas.sql', 'r') as myfile:
+with open('/schemas.sql', 'r') as myfile:
     data = myfile.read()
 conn.execute(data)
 
-logging.info('Cargando información a la base de datos')
+logger.info('subiendo información a la base de datos')
 
 #Cargar datos a las tablas creadas en postgres
 salas_cines.to_sql('salas_de_cine', con=engine, if_exists='replace')

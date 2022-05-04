@@ -1,8 +1,8 @@
 import pandas as pd
 import logging 
 import numpy as np
-
-import datetime
+from datetime import datetime
+from datetime import date
 
 
 
@@ -68,13 +68,13 @@ culturaMain['Fecha carga']= datetime.today().strftime('%d-%m-%Y')
 
 
 # Tabla registros
-tabla_registros=pd.DataFrame(cultura.groupby(['Categoría','Fuente','Provincia']).size(), columns=['Totales'])
+tabla_registros=pd.DataFrame(culturaMain.groupby(['Categoría','Fuente','Provincia']).size(), columns=['Totales'])
 tabla_registros.drop(['Totales'], axis=1, inplace=True)
 
 #Creamos tablas intermedias con la información solicitada
-categoria= pd.DataFrame(cultura.groupby(['Categoría']).size(),columns=['Total por categoría'])  #Cantidad de registros totales por categoría
-fuente=pd.DataFrame(cultura.groupby(['Fuente']).size(),columns=['Total por fuente'])    #Cantidad de registros totales por fuente
-categoria_provincia= pd.DataFrame(cultura.groupby(['Categoría','Provincia']).size(),columns=['Total categoría por provincia'])   #Cantidad de registros por provincia y categoría
+categoria= pd.DataFrame(culturaMain.groupby(['Categoría']).size(),columns=['Total por categoría'])  #Cantidad de registros totales por categoría
+fuente=pd.DataFrame(culturaMain.groupby(['Fuente']).size(),columns=['Total por fuente'])    #Cantidad de registros totales por fuente
+categoria_provincia= pd.DataFrame(culturaMain.groupby(['Categoría','Provincia']).size(),columns=['Total categoría por provincia'])   #Cantidad de registros por provincia y categoría
 
 #Juntar información para formación de tabla
 reg_cat= tabla_registros.merge(categoria, how='inner', left_index=True, right_index=True)
@@ -82,7 +82,7 @@ reg_cat_fue=reg_cat.merge(fuente, how='inner', left_index=True, right_index=True
 tabla_registros_merge=reg_cat_fue.merge(categoria_provincia, how='inner', left_index=True, right_index=True)
 registros= tabla_registros_merge.reset_index()  # Resetear index
 registros['Fecha carga']= datetime.today().strftime('%d-%m-%Y') # Agregar columna de fecha de carga
-
+print(registros.head())
 
 
 

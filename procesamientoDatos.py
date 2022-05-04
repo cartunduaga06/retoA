@@ -2,6 +2,9 @@ import pandas as pd
 import logging 
 import numpy as np
 
+import datetime
+
+
 
 logging.basicConfig(level=logging.DEBUG, filename='debug.log')
 logger = logging.getLogger('loggin')
@@ -60,20 +63,18 @@ logger.info('mensaje info: se han creado las tablas')
 
 
 
-# Cantidad de registros totales por categoría
-cantidad_registros = cultura.groupby('Categoría').size()
-print(cantidad_registros)
-logger.info('mensaje info: se han calculado los registros por categoría')
+# Agregamos columna de fecha de carga
+culturaMain['Fecha carga']= datetime.today().strftime('%d-%m-%Y')
 
-# Cantidad de registros totales por fuente
-cantidad_registros_fuente = cultura.groupby('Provincia').size()
-print(cantidad_registros_fuente)
-logger.info('mensaje info: se han calculado los registros por provincia')
 
-#Cantidad de registros por provincia y categoría
-cantidad_registros_provincia = cultura.groupby(['Provincia','Categoría']).size()
-print(cantidad_registros_provincia)
-logger.info('mensaje info: se han calculado los registros por provincia y categoría')
+# Tabla registros
+tabla_registros=pd.DataFrame(cultura.groupby(['Categoría','Fuente','Provincia']).size(), columns=['Totales'])
+tabla_registros.drop(['Totales'], axis=1, inplace=True)
+
+#Creamos tablas intermedias con la información solicitada
+categoria= pd.DataFrame(cultura.groupby(['Categoría']).size(),columns=['Total por categoría'])  #Cantidad de registros totales por categoría
+fuente=pd.DataFrame(cultura.groupby(['Fuente']).size(),columns=['Total por fuente'])    #Cantidad de registros totales por fuente
+categoria_provincia= pd.DataFrame(cultura.groupby(['Categoría','Provincia']).size(),columns=['Total categoría por provincia'])   #Cantidad de registros por provincia y categoría
 
 #Juntar información para formación de tabla
 reg_cat= tabla_registros.merge(categoria, how='inner', left_index=True, right_index=True)
@@ -81,6 +82,10 @@ reg_cat_fue=reg_cat.merge(fuente, how='inner', left_index=True, right_index=True
 tabla_registros_merge=reg_cat_fue.merge(categoria_provincia, how='inner', left_index=True, right_index=True)
 registros= tabla_registros_merge.reset_index()  # Resetear index
 registros['Fecha carga']= datetime.today().strftime('%d-%m-%Y') # Agregar columna de fecha de carga
+
+
+
+
 
 
 

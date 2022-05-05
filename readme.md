@@ -69,9 +69,9 @@ python src/main.py
 
 #### Descripción de los archivos
 - **src:** 
-  - *datos.py*: proceso de adquisición de los datos desde la fuente, normalización de los mismos y creación de tablas con la información solicitada.
-  - *main.py*: ejecuta programa completo, conexión a base de datos, creación de tablas en postgress desde archivo .sql y carga de datos creados por archivo datos.py.
+  - *datos.py*: proceso de adquisición de los datos desde la fuente.
+  - *procesamientoDatos*: normalización de los mismos y creación de tablas con la información solicitada.
+  - *main.py*: ejecuta programa completo, conexión a base de datos, creación de tablas en postgress desde archivo .sql y carga de datos creados por archivo procesamientoDatos.py.
   - *script*: contiene archivo .sql con scripts para la creación de tablas.
   - *data*: carpeta que va a almacenar las tablas descargadas desde la fuente original.
 - **requirement.txt**: muestra las librerias y versiones utilizados para el desarrollo del programa.
-- **settings.template.ini**: plantilla para configurar datos de conexión a base de datos.

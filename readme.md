@@ -15,23 +15,31 @@ python -m venv env
 
 
 Esto creará un nuevo entorno virtual en la carpeta env. El comando típicamente se ejecuta desde la ruta en la cual se encuentran los archivos del proyecto para el cual se quiere crear el entorno. Por ejemplo:
-
+```cmd
 mkdir nuevo_proyecto
 cd nuevo_proyecto
 python -m venv env
+```
+
+
 
 
 Una vez creado, el entorno virtual debe activarse vía alguno de los siguientes comandos.
 
 En Windows:
-
+``` cdm
 env\Scripts\activate
+
+```
 
 
 En Linux y Mac OS:
 
-source env/bin/activate
+ 
+``` cdm
+source env\Scripts\activate
 
+```
 
 Activado el entorno virtual, utilizar normalmente los comandos python y pip para ejecutar la aplicación o instalar nuevos paquetes en el entorno.
 
@@ -39,7 +47,7 @@ Activado el entorno virtual, utilizar normalmente los comandos python y pip para
 
 Clonar el proyecto
 ```cmd
-git clone
+git clone https://github.com/cartunduaga06/retoA.git
 
 ```
 

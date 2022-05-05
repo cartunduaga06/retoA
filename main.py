@@ -16,9 +16,9 @@ logger.addHandler(fh)
 
 logger.info('mensaje info: se ha iniciado creacion de sql')
 
-DATABASE_NAME = config('DATABASE_NAME',default=False)
-DATABASE_USERNAME = config ('DATABASE_USERNAME',default=False)
-DATABASE_PASSWORD = config ('DATABASE_PASSWORD',default=False)
+DATABASE_NAME = 'cultura'
+DATABASE_USERNAME = 'postgres' 
+DATABASE_PASSWORD = 'postgres'
 
 db_name = DATABASE_NAME if DATABASE_NAME else input('Database: ')
 user = DATABASE_USERNAME if DATABASE_USERNAME else input('Username: ')
@@ -35,7 +35,7 @@ conn.execute(data)
 logger.info('subiendo información a la base de datos')
 
 #Cargar datos a las tablas creadas en postgres
-salas_cines.to_sql('salas_de_cine', con=engine, if_exists='replace')
+cines_filtrados.to_sql('salas_de_cine', con=engine, if_exists='replace')
 registros.to_sql('registros', con=engine, if_exists='replace')
 culturaMain.to_sql('cultura', con=engine, if_exists='replace')
 

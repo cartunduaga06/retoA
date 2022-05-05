@@ -39,7 +39,7 @@ Activado el entorno virtual, utilizar normalmente los comandos python y pip para
 
 Clonar el proyecto
 ```cmd
-git clone https://github.com/FabianaTM/alkemy-project.git
+git clone
 
 ```
 
